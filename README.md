@@ -1,8 +1,14 @@
 # NEXUS9 — Motor de Eficiência de Contexto para Antigravity
 
-[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL_3.0-blue.svg)](LICENSE)
-[![Author: Everton Fridrich](https://img.shields.io/badge/Author-Everton%20Fridrich-orange.svg)](https://github.com/evertonfridrich-ops)
-[![MCP Ready](https://img.shields.io/badge/MCP-Protocol-green.svg)](https://modelcontextprotocol.io)
+<p align="center">
+  <img src="docs/assets/nexus9-logo.png" alt="NEXUS9 Logo" width="220" />
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL_3.0-blue.svg" alt="License: AGPL-3.0" /></a>
+  <a href="https://github.com/evertonfridrich-ops"><img src="https://img.shields.io/badge/Author-Everton%20Fridrich-orange.svg" alt="Author" /></a>
+  <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-Protocol-green.svg" alt="MCP Ready" /></a>
+</p>
 
 > **Criado e mantido por [Everton Fridrich](https://github.com/evertonfridrich-ops).**
 
