@@ -1,0 +1,29 @@
+NEXUS9
+Copyright (C) 2026 Everton Fridrich <evertonfridrich@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+--------------------------------------------------------------------------------
+TRADEMARK NOTICE
+--------------------------------------------------------------------------------
+The "NEXUS9" name, logo, wordmarks, and associated branding are proprietary
+trademarks of Everton Fridrich and are NOT licensed under the GNU AGPLv3.
+Refer to TRADEMARKS.md for complete brand usage guidelines.
+
+--------------------------------------------------------------------------------
+COMMERCIAL & DUAL LICENSING
+--------------------------------------------------------------------------------
+If you require embedding, integrating, or distributing NEXUS9 without the
+reciprocal open-source obligations of the GNU AGPLv3 (e.g., in proprietary
+closed-source commercial products, OEM distribution, or enterprise cloud
+deployments), a separate Commercial License is available directly from the
+author.
+
+Contact: Everton Fridrich <evertonfridrich@gmail.com>

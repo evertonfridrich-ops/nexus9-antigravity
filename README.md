@@ -1,4 +1,10 @@
-# NEXUS9 — motor de eficiência de contexto para Antigravity
+# NEXUS9 — Motor de Eficiência de Contexto para Antigravity
+
+[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL_3.0-blue.svg)](LICENSE)
+[![Author: Everton Fridrich](https://img.shields.io/badge/Author-Everton%20Fridrich-orange.svg)](https://github.com/evertonfridrich-ops)
+[![MCP Ready](https://img.shields.io/badge/MCP-Protocol-green.svg)](https://modelcontextprotocol.io)
+
+> **Criado e mantido por [Everton Fridrich](https://github.com/evertonfridrich-ops).**
 
 **Projeto novo com nove módulos executáveis, 24 operações e Skill nativa.**
 Executa análise, seleção, deduplicação, memória e auditoria localmente; a Skill
@@ -290,3 +296,10 @@ apenas quando não forem mais necessários; remoção do estado elimina checkpoi
 - [Antigravity Skills](https://antigravity.google/docs/skills)
 - [SDK oficial MCP](https://github.com/modelcontextprotocol/python-sdk)
 - [Tree-sitter Python bindings](https://github.com/tree-sitter/py-tree-sitter)
+
+## Licença, Direitos Autorais e Dual Licensing
+
+* **Licença Open Source:** O código-fonte do NEXUS9 é licenciado sob a [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE).
+* **Marca Registrada:** O nome **NEXUS9™** e elementos visuais associados são marcas de **Everton Fridrich** e não são transferidos pela licença AGPL. Consulte [TRADEMARKS.md](TRADEMARKS.md).
+* **Licença Comercial / Enterprise:** Para incorporação em software proprietário fechado, distribuição OEM ou infraestrutura corporativa que não possa seguir as obrigações da AGPLv3, licenças comerciais personalizadas estão disponíveis via `evertonfridrich@gmail.com`.
+* **Contribuições:** Todas as contribuições de terceiros são regidas pelo [Contributor License Agreement (CLA)](CLA.md).
