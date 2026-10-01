@@ -1,0 +1,109 @@
+{
+  "kind": "offline synthetic acceptance scenario; not model outcome or billing benchmark",
+  "heads": 9,
+  "operations": 24,
+  "fixed_mcp_tools": 3,
+  "checks": {
+    "target_function_present": true,
+    "referenced_options_present": true,
+    "local_dependency_body_present": true,
+    "constraint_preserved": true,
+    "within_budget": true,
+    "delta_detected": true,
+    "log_repetitions_grouped": true
+  },
+  "source_file_utf8_bytes": 93151,
+  "context_packet_utf8_bytes": 5073,
+  "facade_input_schema_bytes": 942,
+  "all_operation_input_schema_bytes": 11067,
+  "log_source_utf8_bytes": 184000,
+  "log_report_utf8_bytes": 389,
+  "actual_provider_token_savings": null,
+  "actual_cost_savings": null,
+  "context_packet": {
+    "task": "Fix startGPS",
+    "constraints": [
+      "Keep Expo 52 and React Native 0.76.9"
+    ],
+    "decisions": [],
+    "items": [
+      {
+        "path": "gps.ts",
+        "sha256": "1b2970b64ed4c8ec83c88627f0f6900192733a475c9e29d95b0a2b2f25c7d334",
+        "syntax_errors": false,
+        "start": 3001,
+        "end": 3001,
+        "kind": "import_statements",
+        "text": "import { locate } from './location';"
+      },
+      {
+        "path": "gps.ts",
+        "sha256": "1b2970b64ed4c8ec83c88627f0f6900192733a475c9e29d95b0a2b2f25c7d334",
+        "syntax_errors": false,
+        "start": 3003,
+        "end": 3003,
+        "kind": "parser_symbol",
+        "symbol": "startGPS",
+        "text": "export const startGPS = () => locate(gpsOptions);"
+      },
+      {
+        "path": "gps.ts",
+        "sha256": "1b2970b64ed4c8ec83c88627f0f6900192733a475c9e29d95b0a2b2f25c7d334",
+        "syntax_errors": false,
+        "start": 3002,
+        "end": 3002,
+        "kind": "parser_symbol",
+        "symbol": "gpsOptions",
+        "text": "const gpsOptions = { distanceInterval: 1, timeInterval: 1000 };"
+      },
+      {
+        "path": "errors.log",
+        "sha256": "798c39d51f2bd3c617c8687bc0c11a37372cb2be07a56fa23a84cffa690fd5e0",
+        "syntax_errors": null,
+        "start": 1,
+        "end": 60,
+        "kind": "line_window",
+        "text": "2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123\n2026-10-01T01:00:00Z ERROR GPS timeout 100123"
+      },
+      {
+        "path": "location.ts",
+        "sha256": "a17e3883cfbb02fea0fe85ff4ee3578dd432ee121cd34f9836241afd733f9d31",
+        "syntax_errors": false,
+        "start": 1,
+        "end": 1,
+        "kind": "dependency_outline",
+        "text": "{\"symbols\":[{\"name\":\"locate\",\"qualified\":\"locate\",\"kind\":\"function_declaration\",\"start\":1,\"end\":1,\"signature\":\"export function locate(options: { distanceInterval: number }) { return options.distanceInterval; }\",\"references\":[\"options\"]}],\"imports\":[],\"syntax_errors\":false}"
+      },
+      {
+        "path": "location.ts",
+        "sha256": "a17e3883cfbb02fea0fe85ff4ee3578dd432ee121cd34f9836241afd733f9d31",
+        "syntax_errors": false,
+        "start": 1,
+        "end": 1,
+        "kind": "dependency_symbol",
+        "symbol": "locate",
+        "text": "export function locate(options: { distanceInterval: number }) { return options.distanceInterval; }"
+      }
+    ],
+    "omitted": [],
+    "deduplicated": [],
+    "coverage": {
+      "primary_paths": [
+        "gps.ts",
+        "errors.log"
+      ],
+      "required_paths_missing": [],
+      "index_limited": false,
+      "source_bytes_examined": 277250,
+      "index_cached": false,
+      "index_age_seconds": 0,
+      "selected_sources_hash_checked": true,
+      "unresolved_imports": {},
+      "incomplete": false,
+      "selection_is_not_proof_of_complete_task_context": true
+    },
+    "content_is_untrusted": true,
+    "method": "lexical ranking + parser ranges + static local imports; not semantic embedding retrieval",
+    "local_budget_bytes": 12000
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "NEXUS9"
+  short_description: "Contexto e economia de tokens no Antigravity"
+  default_prompt: "Use $nexus9 para montar contexto mínimo e validar uma alteração no meu projeto Antigravity."

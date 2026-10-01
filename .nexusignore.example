@@ -1,0 +1,6 @@
+# Relative globs; simple syntax, not full gitignore semantics.
+data/*
+secrets/*
+*.min.js
+package-lock.json
+yarn.lock

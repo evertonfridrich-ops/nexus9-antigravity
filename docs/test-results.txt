@@ -1,0 +1,102 @@
+test_mcp_windows_dependency_is_explicitly_locked (test_distribution.DistributionTests.test_mcp_windows_dependency_is_explicitly_locked) ... ok
+test_atomic_budget_cannot_overspend_concurrently (test_features.FeatureTests.test_atomic_budget_cannot_overspend_concurrently) ... ok
+test_cache_sources_validated_and_invalidated (test_features.FeatureTests.test_cache_sources_validated_and_invalidated) ... ok
+test_compress_deduplicates_exact_text_and_pins_constraints (test_features.FeatureTests.test_compress_deduplicates_exact_text_and_pins_constraints) ... ok
+test_compress_rejects_duplicate_identifiers (test_features.FeatureTests.test_compress_rejects_duplicate_identifiers) ... ok
+test_context_packet_includes_dependencies_and_constraints (test_features.FeatureTests.test_context_packet_includes_dependencies_and_constraints) ... ok
+test_delta_unchanged_and_changed_without_advancing_baseline (test_features.FeatureTests.test_delta_unchanged_and_changed_without_advancing_baseline) ... ok
+test_evaluation_detects_quality_regression (test_features.FeatureTests.test_evaluation_detects_quality_regression) ... ok
+test_external_tool_route_does_not_modify_host (test_features.FeatureTests.test_external_tool_route_does_not_modify_host) ... ok
+test_handoff_does_not_spawn_or_change_models (test_features.FeatureTests.test_handoff_does_not_spawn_or_change_models) ... ok
+test_incremental_index_reparses_only_content_changes (test_features.FeatureTests.test_incremental_index_reparses_only_content_changes) ... ok
+test_index_removes_deleted_files_on_complete_refresh (test_features.FeatureTests.test_index_removes_deleted_files_on_complete_refresh) ... ok
+test_invalid_syntax_is_not_reported_as_pass (test_features.FeatureTests.test_invalid_syntax_is_not_reported_as_pass) ... ok
+test_known_hash_reuse_is_explicit (test_features.FeatureTests.test_known_hash_reuse_is_explicit) ... ok
+test_large_logs_stream_and_redact_credentials (test_features.FeatureTests.test_large_logs_stream_and_redact_credentials) ... ok
+test_logs_group_repetition_but_keep_status_codes_distinct (test_features.FeatureTests.test_logs_group_repetition_but_keep_status_codes_distinct) ... ok
+test_memory_resume_checks_stale_files_and_preserves_constraints (test_features.FeatureTests.test_memory_resume_checks_stale_files_and_preserves_constraints) ... ok
+test_memory_revision_conflict (test_features.FeatureTests.test_memory_revision_conflict) ... ok
+test_missing_delta_baseline_and_session_are_explicit (test_features.FeatureTests.test_missing_delta_baseline_and_session_are_explicit) ... ok
+test_multiline_import_preserved (test_features.FeatureTests.test_multiline_import_preserved) ... ok
+test_nine_heads_have_discoverable_executable_operations (test_features.FeatureTests.test_nine_heads_have_discoverable_executable_operations) ... ok
+test_omitted_required_symbol_reports_incomplete (test_features.FeatureTests.test_omitted_required_symbol_reports_incomplete) ... ok
+test_packet_keeps_referenced_global_configuration (test_features.FeatureTests.test_packet_keeps_referenced_global_configuration) ... ok
+test_packet_pinned_content_cannot_disappear_to_fit (test_features.FeatureTests.test_packet_pinned_content_cannot_disappear_to_fit) ... ok
+test_python_decorators_and_qualified_symbols (test_features.FeatureTests.test_python_decorators_and_qualified_symbols) ... ok
+test_secret_paths_cannot_enter_context_or_memory_sources (test_features.FeatureTests.test_secret_paths_cannot_enter_context_or_memory_sources) ... ok
+test_session_reopening_does_not_reset_spending (test_features.FeatureTests.test_session_reopening_does_not_reset_spending) ... ok
+test_static_import_graph_reverse_depth (test_features.FeatureTests.test_static_import_graph_reverse_depth) ... ok
+test_strict_operation_schema_rejects_unknowns_and_coercion (test_features.FeatureTests.test_strict_operation_schema_rejects_unknowns_and_coercion) ... ok
+test_total_budget_exhaustion_is_enforced (test_features.FeatureTests.test_total_budget_exhaustion_is_enforced) ... ok
+test_tsx_and_javascript_parsing (test_features.FeatureTests.test_tsx_and_javascript_parsing) ... ok
+test_typescript_arrow_function_correct_braces (test_features.FeatureTests.test_typescript_arrow_function_correct_braces) ... ok
+test_unresolved_alias_is_explicit (test_features.FeatureTests.test_unresolved_alias_is_explicit) ... ok
+test_usage_deduplication_and_origin (test_features.FeatureTests.test_usage_deduplication_and_origin) ... ok
+test_verify_does_not_execute_source (test_features.FeatureTests.test_verify_does_not_execute_source) ... ok
+test_binary_non_utf8_and_large (test_guard.CoreTests.test_binary_non_utf8_and_large) ... ok
+test_budget_includes_metadata_unicode (test_guard.CoreTests.test_budget_includes_metadata_unicode) ... ok
+test_budget_pagination_never_skips_undelivered_lines (test_guard.CoreTests.test_budget_pagination_never_skips_undelivered_lines) ... ok
+test_cache_expires (test_guard.CoreTests.test_cache_expires) ... ok
+test_cache_invalidates_same_size_same_mtime (test_guard.CoreTests.test_cache_invalidates_same_size_same_mtime) ... ok
+test_checkpoint_revision_conflicts (test_guard.CoreTests.test_checkpoint_revision_conflicts) ... ok
+test_checkpoint_survives_restart_and_redacts (test_guard.CoreTests.test_checkpoint_survives_restart_and_redacts) ... ok
+test_checkpoint_validation (test_guard.CoreTests.test_checkpoint_validation) ... ok
+test_concurrent_checkpoint_updates (test_guard.CoreTests.test_concurrent_checkpoint_updates) ... ok
+test_conditional_read_explicit (test_guard.CoreTests.test_conditional_read_explicit) ... ok
+test_config_atomic_preservation_idempotency_and_backup (test_guard.CoreTests.test_config_atomic_preservation_idempotency_and_backup) ... ok
+test_config_conflict_untouched (test_guard.CoreTests.test_config_conflict_untouched) ... ok
+test_config_invalid_json_or_duplicate_keys_untouched (test_guard.CoreTests.test_config_invalid_json_or_duplicate_keys_untouched) ... ok
+test_directory_symlinks_denied (test_guard.CoreTests.test_directory_symlinks_denied) ... ok
+test_hardlinks_denied (test_guard.CoreTests.test_hardlinks_denied) ... ok
+test_ignore_and_inventory (test_guard.CoreTests.test_ignore_and_inventory) ... ok
+test_limits_and_types (test_guard.CoreTests.test_limits_and_types) ... ok
+test_long_line_reports_truncation (test_guard.CoreTests.test_long_line_reports_truncation) ... ok
+test_metrics_do_not_invent_billing (test_guard.CoreTests.test_metrics_do_not_invent_billing) ... ok
+test_missing_symbol (test_guard.CoreTests.test_missing_symbol) ... ok
+test_namespaced_state (test_guard.CoreTests.test_namespaced_state) ... ok
+test_non_python_never_claims_ast (test_guard.CoreTests.test_non_python_never_claims_ast) ... ok
+test_nonfinite_json_is_rejected (test_guard.CoreTests.test_nonfinite_json_is_rejected) ... ok
+test_python_ast_decorators_and_strings (test_guard.CoreTests.test_python_ast_decorators_and_strings) ... ok
+test_redaction_before_window (test_guard.CoreTests.test_redaction_before_window) ... ok
+test_redaction_preserves_lines (test_guard.CoreTests.test_redaction_preserves_lines) ... ok
+test_root_is_explicit (test_guard.CoreTests.test_root_is_explicit) ... ok
+test_search_is_literal_and_bounded (test_guard.CoreTests.test_search_is_literal_and_bounded) ... ok
+test_search_redacts (test_guard.CoreTests.test_search_redacts) ... ok
+test_secret_paths_denied (test_guard.CoreTests.test_secret_paths_denied) ... ok
+test_symbol_ambiguity_and_qualified_lookup (test_guard.CoreTests.test_symbol_ambiguity_and_qualified_lookup) ... ok
+test_symlinks_denied (test_guard.CoreTests.test_symlinks_denied) ... ok
+test_syntax_checks_never_execute (test_guard.CoreTests.test_syntax_checks_never_execute) ... ok
+test_traversal_and_absolute_paths (test_guard.CoreTests.test_traversal_and_absolute_paths) ... ok
+test_windows_backslash_relative_path (test_guard.CoreTests.test_windows_backslash_relative_path) ... ok
+test_backup_tampering_stops_rollback_before_any_mutation (test_integration.IntegrationTests.test_backup_tampering_stops_rollback_before_any_mutation) ... ok
+test_disabled_hydra_server_does_not_claim_ownership (test_integration.IntegrationTests.test_disabled_hydra_server_does_not_claim_ownership) ... ok
+test_duplicate_config_keys_are_not_silently_lost (test_integration.IntegrationTests.test_duplicate_config_keys_are_not_silently_lost) ... ok
+test_existing_skill_conflict_is_detected_before_config_write (test_integration.IntegrationTests.test_existing_skill_conflict_is_detected_before_config_write) ... ok
+test_install_preserves_other_servers_and_records_reversible_changes (test_integration.IntegrationTests.test_install_preserves_other_servers_and_records_reversible_changes) ... ok
+test_mid_install_failure_restores_previous_config (test_integration.IntegrationTests.test_mid_install_failure_restores_previous_config) ... ok
+test_read_only_audit_detects_coexistence_without_exposing_arguments (test_integration.IntegrationTests.test_read_only_audit_detects_coexistence_without_exposing_arguments) ... ok
+test_rollback_preserves_unrelated_config_changes_after_install (test_integration.IntegrationTests.test_rollback_preserves_unrelated_config_changes_after_install) ... ok
+test_rollback_refuses_to_overwrite_user_edited_skill (test_integration.IntegrationTests.test_rollback_refuses_to_overwrite_user_edited_skill) ... ok
+test_real_mcp_workflow_and_single_result_representation (test_mcp.MCPTests.test_real_mcp_workflow_and_single_result_representation) ... Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type PingRequest
+ok
+test_cached_discovery_still_reads_changed_source_and_new_dependency (test_runtime_policy.RuntimePolicyTests.test_cached_discovery_still_reads_changed_source_and_new_dependency) ... ok
+test_catalog_has_three_tool_protocol_with_disabled_operations_disclosed (test_runtime_policy.RuntimePolicyTests.test_catalog_has_three_tool_protocol_with_disabled_operations_disclosed) ... ok
+test_health_reports_integrity_without_background_workers_or_embeddings (test_runtime_policy.RuntimePolicyTests.test_health_reports_integrity_without_background_workers_or_embeddings) ... ok
+test_light_inventory_is_bounded_but_explicit_sources_remain_available (test_runtime_policy.RuntimePolicyTests.test_light_inventory_is_bounded_but_explicit_sources_remain_available) ... ok
+test_light_refresh_limits_new_parses_and_rotates_to_later_files (test_runtime_policy.RuntimePolicyTests.test_light_refresh_limits_new_parses_and_rotates_to_later_files) ... ok
+test_oversized_light_source_is_visible_as_limited_and_rejected_explicitly (test_runtime_policy.RuntimePolicyTests.test_oversized_light_source_is_visible_as_limited_and_rejected_explicitly) ... ok
+test_ownership_blocks_valid_operations_and_embedded_memory_references (test_runtime_policy.RuntimePolicyTests.test_ownership_blocks_valid_operations_and_embedded_memory_references) ... ok
+
+----------------------------------------------------------------------
+Ran 87 tests in 1.871s
+
+OK

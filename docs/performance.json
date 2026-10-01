@@ -1,0 +1,88 @@
+{
+  "scope": "synthetic local Suite benchmark; not Antigravity, user CPU, model quality or billing",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "python": "3.12.14",
+  "logical_cpus_in_runner": 9,
+  "hardware_policy": {
+    "hardware": "light",
+    "memory_owner": "external",
+    "compression_owner": "external",
+    "disabled_operations": {
+      "memory_save": "memory owned by external server",
+      "memory": "memory owned by external server",
+      "resume": "memory owned by external server",
+      "compress": "compression owned by external server",
+      "logs": "compression owned by external server"
+    },
+    "index_limits": {
+      "max_files": 120,
+      "max_reparsed": 24,
+      "seconds": 2.0,
+      "source_bytes": 8388608,
+      "file_bytes": 524288,
+      "scan_entries": 1200,
+      "scan_seconds": 1.0,
+      "refresh_ttl": 30.0,
+      "inventory_records": 512
+    },
+    "background_workers": 0,
+    "embeddings": false,
+    "outbound_network": false,
+    "deadlines_are_cooperative": true
+  },
+  "files": 82,
+  "corpus_bytes": 3842388,
+  "samples": [
+    {
+      "phase": "cold",
+      "elapsed_ms": 197.817,
+      "process_cpu_ms": 197.737,
+      "output_bytes": 1597,
+      "index_cached": false,
+      "coverage_incomplete": true
+    },
+    {
+      "phase": "warm",
+      "elapsed_ms": 3.449,
+      "process_cpu_ms": 3.452,
+      "output_bytes": 1600,
+      "index_cached": true,
+      "coverage_incomplete": true
+    },
+    {
+      "phase": "warm",
+      "elapsed_ms": 3.626,
+      "process_cpu_ms": 3.63,
+      "output_bytes": 1600,
+      "index_cached": true,
+      "coverage_incomplete": true
+    },
+    {
+      "phase": "warm",
+      "elapsed_ms": 3.382,
+      "process_cpu_ms": 3.385,
+      "output_bytes": 1600,
+      "index_cached": true,
+      "coverage_incomplete": true
+    },
+    {
+      "phase": "warm",
+      "elapsed_ms": 3.052,
+      "process_cpu_ms": 3.055,
+      "output_bytes": 1600,
+      "index_cached": true,
+      "coverage_incomplete": true
+    },
+    {
+      "phase": "warm",
+      "elapsed_ms": 2.808,
+      "process_cpu_ms": 2.811,
+      "output_bytes": 1600,
+      "index_cached": true,
+      "coverage_incomplete": true
+    }
+  ],
+  "warm_median_elapsed_ms": 3.382,
+  "warm_median_cpu_ms": 3.385,
+  "source_and_dependency_checks": "passed"
+}
