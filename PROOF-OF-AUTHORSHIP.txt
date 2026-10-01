@@ -1,0 +1,15 @@
+================================================================================
+NEXUS9 - REGISTRO DE CUSTÓDIA E PROVA DE AUTORIA
+================================================================================
+
+Projeto            : NEXUS9 Engine
+Autor e Titular    : EVERTON FRIDRICH <evertonfridrich@gmail.com>
+Data de Emissão    : 2026-10-01
+Arquivo Bundle     : nexus9-history.bundle
+Algoritmo          : SHA-256
+Hash Criptográfico : 3B6E8B2A85C6066BB20EFBACB3B1DE85A87054774D76C1D486797232B18BF57B
+
+Declaração:
+Este arquivo e o bundle correspondente registram a árvore completa de commits,
+timestamps e código-fonte original sob autoria exclusiva de Everton Fridrich.
+================================================================================
