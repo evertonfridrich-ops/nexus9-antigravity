@@ -52,7 +52,7 @@ def log_groups(guard, path, max_groups, include_warnings):
             if not raw:
                 break
             bytes_read += len(raw)
-            if bytes_read > 64 * 1024 * 1024 or time.monotonic() - started > 3:
+            if bytes_read > 64 * 1024 * 1024 or time.monotonic() - started > 10.0:
                 limited = True
                 break
             if b"\x00" in raw:

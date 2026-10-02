@@ -201,7 +201,7 @@ class Engine:
                             continue
                         if entry.is_dir(follow_symlinks=False):
                             stack.append(Path(entry.path))
-                        elif entry.is_file(follow_symlinks=False) and info.st_nlink == 1:
+                        elif entry.is_file(follow_symlinks=False) and (info.st_nlink in (0, 1) if os.name == "nt" else info.st_nlink == 1):
                             if info.st_size <= MAX_FILE_BYTES and (rel.suffix.lower() in TEXT_SUFFIXES or rel.name.lower() in {"dockerfile", "makefile"}):
                                 yield rel.as_posix(), info.st_size
             except OSError:
