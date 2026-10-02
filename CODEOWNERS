@@ -1,0 +1,15 @@
+# NEXUS9 Codeowners File
+* @evertonfridrich-ops
+
+# Core Engine & MCP
+/src/nexus9/ @evertonfridrich-ops
+/server.py @evertonfridrich-ops
+/integration.py @evertonfridrich-ops
+
+# Security & Policies
+/src/nexus9/guard.py @evertonfridrich-ops
+/SECURITY.md @evertonfridrich-ops
+/docs/SECURITY.md @evertonfridrich-ops
+
+# Workflows & CI
+/.github/ @evertonfridrich-ops

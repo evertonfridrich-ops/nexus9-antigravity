@@ -63,7 +63,7 @@ def verify_package(package):
         raise ValueError("release manifest lacks required files")
     for base in ("src", "skills", "scripts"):
         for file in (package / base).rglob("*"):
-            if file.is_file() and "__pycache__" not in file.parts and file.suffix not in {".pyc", ".pyo"}:
+            if file.is_file() and "__pycache__" not in file.parts and not any(p.endswith(".egg-info") for p in file.parts) and file.suffix not in {".pyc", ".pyo"}:
                 if file.relative_to(package).as_posix() not in manifest:
                     raise ValueError("unmanifested executable or Skill resource")
     return {"verified_files": len(manifest), "manifest_sha256": digest((package / "MANIFEST.sha256.json").read_bytes()),

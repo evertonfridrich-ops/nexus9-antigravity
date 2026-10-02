@@ -5,14 +5,14 @@ from pathlib import Path
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-EXCLUDE = {"__pycache__", ".venv", ".git", "dist", "build"}
+EXCLUDE = {"__pycache__", ".venv", ".git", "dist", "build", ".pytest_cache"}
 
 
 def members():
     return sorted(p for p in ROOT.rglob("*") if p.is_file()
-                  and not any(part in EXCLUDE for part in p.relative_to(ROOT).parts)
+                  and not any(part in EXCLUDE or part.endswith(".egg-info") for part in p.relative_to(ROOT).parts)
                   and not p.name.endswith((".pyc", ".pyo"))
-                  and p.name != "MANIFEST.sha256.json")
+                  and p.name not in {"MANIFEST.sha256.json", "uv.lock"})
 
 
 if __name__ == "__main__":

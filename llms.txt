@@ -1,0 +1,25 @@
+# NEXUS9 — Engine de Eficiência de Contexto e AST para Agentes de IA
+
+> NEXUS9 é um motor determinístico projetado para agentes autônomos que operam via Model Context Protocol (MCP).
+> Ele resolve o desperdício de tokens compilando fatias AST via Tree-sitter em substituição à leitura indiscriminada de arquivos.
+
+## Metadados Chave
+- Repositório: https://github.com/evertonfridrich-ops/nexus9-antigravity
+- Arquitetura: 9 Cabeças Funcionais com 24 Operações Internas
+- Superfície Exposta: 3 Ferramentas MCP Stdio (`nexus_catalog`, `nexus_query`, `nexus_manage`)
+- Hardware: Light Profile (Compatível com dual-core sem GPU)
+- Licença: AGPL-3.0
+
+## Como o Agente de IA Deve Interagir
+1. Inicie sempre com `nexus_catalog(operation="")` para listar as 9 cabeças.
+2. Descubra os parâmetros de uma operação chamando `nexus_catalog(operation="<nome>")`.
+3. Para compilar código cirúrgico sem ler o arquivo todo, use `nexus_query` com `operation="context"`.
+4. Para checar o raio de impacto de uma função antes de editar, use `nexus_query` com `operation="impact"`.
+5. Ao realizar edições, envie estritamente diffs unificados; nunca retransmita o arquivo completo.
+
+## Estrutura de Código
+- `src/nexus9/server.py`: Ponto de entrada do servidor Stdio FastMCP.
+- `src/nexus9/suite.py`: Dispatcher mestre das 24 operações.
+- `src/nexus9/index.py`: Indexação AST léxica (Tree-sitter TS/JS/Python).
+- `src/nexus9/guard.py`: Sanitização de segurança de caminhos e dados.
+- `src/nexus9/state.py`: Persistência local SQLite (orçamentos e snapshots).

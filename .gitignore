@@ -1,7 +1,75 @@
-.venv/
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
-*.egg-info/
-dist/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 *.bundle
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Testing & Coverage
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+htmlcov/
+
+# Linters & Tooling
+.mypy_cache/
+.ruff_cache/
+
+# Local State & Databases
+*.sqlite3
+*.sqlite3-journal
+*.db
+local_state/
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+credentials.json
+
+# Operating System & IDEs
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+uv.lock

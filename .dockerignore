@@ -1,0 +1,15 @@
+.git/
+.github/
+.venv/
+__pycache__/
+*.pyc
+*.sqlite3
+dist/
+build/
+*.egg-info/
+docs/
+tests/
+.dockerignore
+Dockerfile
+docker-compose.yml
+*.bundle

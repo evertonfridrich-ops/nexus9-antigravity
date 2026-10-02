@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="800" height="200">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070b19">
+        <animate attributeName="stop-color" values="#070b19;#0f172a;#0b132b;#070b19" dur="8s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" stop-color="#0f172a">
+        <animate attributeName="stop-color" values="#0f172a;#1e1b4b;#0f172a;#0f172a" dur="8s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#020617">
+        <animate attributeName="stop-color" values="#020617;#0b0f19;#020617" dur="8s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+
+    <linearGradient id="neonCyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="800" height="200" fill="url(#bgGrad)"/>
+
+  <g stroke="rgba(56, 189, 248, 0.08)" stroke-width="1">
+    <line x1="100" y1="0" x2="100" y2="200"/>
+    <line x1="200" y1="0" x2="200" y2="200"/>
+    <line x1="300" y1="0" x2="300" y2="200"/>
+    <line x1="500" y1="0" x2="500" y2="200"/>
+    <line x1="600" y1="0" x2="600" y2="200"/>
+    <line x1="700" y1="0" x2="700" y2="200"/>
+    <line x1="0" y1="50" x2="800" y2="50"/>
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="150" x2="800" y2="150"/>
+  </g>
+
+  <text x="400" y="85" text-anchor="middle" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif" font-size="44" font-weight="900" fill="url(#neonCyan)" filter="url(#glow)" letter-spacing="4">NEXUS9</text>
+  <text x="400" y="118" text-anchor="middle" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif" font-size="14" font-weight="600" fill="#94a3b8" letter-spacing="2">CONTEXT-EFFICIENCY ENGINE FOR ANTIGRAVITY</text>
+  <text x="400" y="142" text-anchor="middle" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif" font-size="12" font-weight="400" fill="#64748b">9 Executable Heads • 24 Operations • Tree-sitter AST • Deterministic Local Execution</text>
+
+  <path fill="rgba(56, 189, 248, 0.15)" d="M0,175 C200,160 380,195 560,175 C680,160 740,185 800,170 L800,200 L0,200 Z">
+    <animate attributeName="d" dur="7s" repeatCount="indefinite" values="
+      M0,175 C200,160 380,195 560,175 C680,160 740,185 800,170 L800,200 L0,200 Z;
+      M0,165 C220,190 350,160 540,185 C690,170 730,160 800,180 L800,200 L0,200 Z;
+      M0,175 C200,160 380,195 560,175 C680,160 740,185 800,170 L800,200 L0,200 Z
+    "/>
+  </path>
+  <path fill="rgba(129, 140, 248, 0.2)" d="M0,185 C180,195 360,170 540,190 C680,175 750,190 800,180 L800,200 L0,200 Z">
+    <animate attributeName="d" dur="10s" repeatCount="indefinite" values="
+      M0,185 C180,195 360,170 540,190 C680,175 750,190 800,180 L800,200 L0,200 Z;
+      M0,175 C200,165 400,195 580,175 C700,190 760,170 800,185 L800,200 L0,200 Z;
+      M0,185 C180,195 360,170 540,190 C680,175 750,190 800,180 L800,200 L0,200 Z
+    "/>
+  </path>
+</svg>

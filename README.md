@@ -1,18 +1,25 @@
-# NEXUS9 — Motor de Eficiência de Contexto para Antigravity
-
 <p align="center">
-  <img src="docs/assets/nexus9-logo.png" alt="NEXUS9 Logo" width="220" />
+  <img src=".github/assets/header.svg" alt="NEXUS9 Banner" width="100%" />
 </p>
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL_3.0-blue.svg" alt="License: AGPL-3.0" /></a>
-  <a href="https://github.com/evertonfridrich-ops"><img src="https://img.shields.io/badge/Author-Everton%20Fridrich-orange.svg" alt="Author" /></a>
-  <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-Protocol-green.svg" alt="MCP Ready" /></a>
+  <a href="https://github.com/evertonfridrich-ops/nexus9-antigravity/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/evertonfridrich-ops/nexus9-antigravity/ci.yml?style=for-the-badge&label=CI%20Checks&logo=githubactions&logoColor=white" alt="CI Status"/></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL_3.0-blue?style=for-the-badge&logo=opensourceinitiative&logoColor=white" alt="License"/></a>
+  <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-1.30.0-0ea5e9?style=for-the-badge&logo=fastapi&logoColor=white" alt="MCP Protocol"/></a>
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.12%20%7C%203.13-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python Version"/></a>
+  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Strict%20Guard-emerald?style=for-the-badge&logo=shield&logoColor=white" alt="Security"/></a>
 </p>
+
+<p align="center">
+  <strong>Motor determinístico de redução de overhead de tokens e compilação de contexto semântico para Google Antigravity.</strong><br/>
+  Projetado para operar estritamente em CPU local, sem vetores neurais em background, sem GPU/CUDA e sem vazamento de dados.
+</p>
+
+<img src=".github/assets/wave.svg" width="100%" alt="separator"/>
 
 > **Criado e mantido por [Everton Fridrich](https://github.com/evertonfridrich-ops).**
 
-**Projeto novo com nove módulos executáveis, 24 operações e Skill nativa.**
+**Nove módulos executáveis, 24 operações e Skill nativa.**
 Executa análise, seleção, deduplicação, memória e auditoria localmente; a Skill
 orquestra três ferramentas MCP com descoberta progressiva.
 
@@ -40,6 +47,78 @@ tracking, incluir as opções globais que ela referencia e recuperar o corpo de
 uma função local importada. Mantém “não atualizar Expo/RN” na memória. Se um
 trecho necessário não couber, informa a omissão; não corta silenciosamente
 essas restrições para aparentar economia.
+
+<img src=".github/assets/wave.svg" width="100%" alt="separator"/>
+
+## 📐 Arquitetura do Sistema
+
+```mermaid
+flowchart TD
+    subgraph AntigravityClient ["Google Antigravity / Client MCP"]
+        Agent["Agente Autônomo"]
+        Skill["Skill Nativa NEXUS9"]
+    end
+
+    subgraph FastMCPEntry ["Interface MCP Stdio"]
+        Cat["nexus_catalog()"]
+        Query["nexus_query()"]
+        Manage["nexus_manage()"]
+    end
+
+    subgraph CoreEngine ["NEXUS9 Engine (9 Heads)"]
+        H1["1. Orchestrator\n(Planejamento & Risco)"]
+        H2["2. Tool Router\n(Seleção Progressiva)"]
+        H3["3. Context Compiler\n(Tree-sitter AST + Grafo)"]
+        H4["4. Project Memory\n(Decisões & Revisões)"]
+        H5["5. Delta & Cache\n(Diffs Unified + Hashes)"]
+        H6["6. Budget Governor\n(Limites Atômicos de Bytes)"]
+        H7["7. Local Reducer\n(Deduplicação & Logs)"]
+        H8["8. Usage & Eval\n(Telemetria Local)"]
+        H9["9. Scoped Handoff\n(Briefings Verificáveis)"]
+    end
+
+    subgraph StorageSecurity ["Persistência & Isolamento Local"]
+        Guard["Guard Rails\n(Anti-Traversal & Redaction)"]
+        SQLite[("State SQLite3\nOrçamentos & Snapshots")]
+    end
+
+    Agent --> Skill
+    Skill --> Cat & Query & Manage
+    Cat & Query & Manage --> CoreEngine
+    CoreEngine --> Guard
+    Guard --> SQLite
+```
+
+<img src=".github/assets/wave.svg" width="100%" alt="separator"/>
+
+## 💻 Tech Stack
+
+<p align="center">
+  <img src=".github/assets/techstack.svg" alt="Tech Stack" width="100%"/>
+</p>
+
+| Camada | Tecnologia | Propósito |
+|---|---|---|
+| **Linguagem & Runtime** | Python 3.12 / 3.13 | Core de execução tipado e isolado via venv |
+| **Protocolo de Comunicação** | Model Context Protocol (`mcp 1.30.0`) | Transporte via Stdio com FastMCP |
+| **Parsing Sintático (AST)** | Tree-sitter (`0.25.2`) | Extração de funções, classes, imports em TS/JS/Python |
+| **Armazenamento de Estado** | SQLite3 (Transacional) | Armazenamento de snapshots, memórias, cache com TTL e orçamentos |
+| **Automação & SO** | PowerShell 7 / Bash | Scripts de instalação isolada com recibos atômicos e rollback |
+
+<img src=".github/assets/wave.svg" width="100%" alt="separator"/>
+
+## ⚖️ Comparativo de Abordagens
+
+| Característica | NEXUS9 (AST Local) | RAG / Vetores Tradicionais | Inclusão de Arquivos Inteiros |
+|---|:---:|:---:|:---:|
+| **Dependência de GPU / CUDA** | ❌ Zero | ⚠️ Alta | ❌ Zero |
+| **Consumo de Contexto (Tokens)** | 🟢 Mínimo (AST Snips) | 🟡 Médio (Chunks) | 🔴 Catastrófico |
+| **Latência de Processamento** | ⚡ < 15ms | 🐢 200-800ms | ⚡ < 5ms |
+| **Exposição a Hallucination** | 🟢 Baixa (Sintaxe Real) | 🟡 Média (Semântica) | 🟢 Baixa |
+| **Respeito a Orçamento de Bytes** | ✅ Garantido | ❌ Não determinístico | ❌ Inexistente |
+| **Operação 100% Offline** | ✅ Sim | ⚠️ Requer modelo local | ✅ Sim |
+
+<img src=".github/assets/wave.svg" width="100%" alt="separator"/>
 
 ## Instalar no Windows
 
@@ -302,6 +381,43 @@ apenas quando não forem mais necessários; remoção do estado elimina checkpoi
 - [Antigravity Skills](https://antigravity.google/docs/skills)
 - [SDK oficial MCP](https://github.com/modelcontextprotocol/python-sdk)
 - [Tree-sitter Python bindings](https://github.com/tree-sitter/py-tree-sitter)
+
+<img src=".github/assets/wave.svg" width="100%" alt="separator"/>
+
+## 🗺️ Roadmap de Evolução
+
+> Progresso da Versão 0.3.0: `████████████████░░░░ 80%`
+
+| Milestone | Status | Entregáveis |
+|---|:---:|---|
+| **v0.1.0** — Core Engine | ✅ Concluído | 9 Cabeças funcionais, servidor FastMCP stdio e parsers Tree-sitter. |
+| **v0.2.0** — Guard & State | ✅ Concluído | Sanitização de caminhos no Windows, SQLite transacional e controle de orçamentos. |
+| **v0.3.0** — Institutional Hardening | 🚧 Em validação | Suporte a `st_nlink=0`, suite de testes automatizada (87 testes), CLA e AGPL-3.0. |
+| **v0.4.0** — Distributed & Telemetry | 🔲 Planejado | Exportação OpenTelemetry, suporte a Rust/Go parsers e cache federado. |
+
+<img src=".github/assets/wave.svg" width="100%" alt="separator"/>
+
+## 👥 Contribuidores & Comunidade
+
+Agradecemos a todos que contribuem para a evolução do NEXUS9!
+
+<p align="center">
+  <a href="https://github.com/evertonfridrich-ops/nexus9-antigravity/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=evertonfridrich-ops/nexus9-antigravity" alt="Contributors"/>
+  </a>
+</p>
+
+Consulte nosso [Guia de Contribuição](CONTRIBUTING.md) e nosso [Código de Conduta](CODE_OF_CONDUCT.md).
+
+## ⭐ Star History
+
+<p align="center">
+  <a href="https://star-history.com/#evertonfridrich-ops/nexus9-antigravity&Date">
+    <img src="https://api.star-history.com/svg?repos=evertonfridrich-ops/nexus9-antigravity&type=Date" alt="Star History Chart" width="700"/>
+  </a>
+</p>
+
+<img src=".github/assets/wave.svg" width="100%" alt="separator"/>
 
 ## Licença, Direitos Autorais e Dual Licensing
 

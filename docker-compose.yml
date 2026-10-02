@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  nexus9:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nexus9-engine
+    environment:
+      - NEXUS9_HARDWARE=standard
+      - NEXUS9_LOG_LEVEL=INFO
+    volumes:
+      - nexus9_state:/home/nexus9/.local/state/Nexus9
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+volumes:
+  nexus9_state:
+    name: nexus9_persistent_state

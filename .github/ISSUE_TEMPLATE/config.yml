@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Discussões Técnicas e Dúvidas
+    url: https://github.com/evertonfridrich-ops/nexus9-antigravity/discussions
+    about: Pergunte e compartilhe ideias sobre o NEXUS9 com a comunidade.
+  - name: Reporte de Segurança Privado
+    url: mailto:evertonfridrich@gmail.com?subject=[SECURITY]%20NEXUS9
+    about: Utilize este canal para vulnerabilidades confidenciais.

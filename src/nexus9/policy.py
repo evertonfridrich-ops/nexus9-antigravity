@@ -23,9 +23,9 @@ class RuntimePolicy:
                     "source_bytes": 8 * 1024 * 1024, "file_bytes": 512 * 1024,
                     "scan_entries": 1200, "scan_seconds": 1.0, "refresh_ttl": 30.0,
                     "inventory_records": 512}
-        return {"max_files": 1000, "max_reparsed": 1000, "seconds": 8.0,
+        return {"max_files": 1000, "max_reparsed": 1000, "seconds": 30.0,
                 "source_bytes": 64 * 1024 * 1024, "file_bytes": 2 * 1024 * 1024,
-                "scan_entries": 5000, "scan_seconds": 3.0, "refresh_ttl": 0.0,
+                "scan_entries": 5000, "scan_seconds": 10.0, "refresh_ttl": 0.0,
                 "inventory_records": 5000}
 
     def disabled(self):

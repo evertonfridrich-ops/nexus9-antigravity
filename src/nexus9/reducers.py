@@ -63,9 +63,9 @@ def log_groups(guard, path, max_groups, include_warnings):
                 while raw and not raw.endswith(b"\n"):
                     raw = stream.readline(16385)
                     bytes_read += len(raw)
-                    if bytes_read > 64 * 1024 * 1024 or time.monotonic() - started > 3:
+                    if bytes_read > 64 * 1024 * 1024 or time.monotonic() - started > 10.0:
                         break
-                if bytes_read > 64 * 1024 * 1024 or time.monotonic() - started > 3:
+                if bytes_read > 64 * 1024 * 1024 or time.monotonic() - started > 10.0:
                     break
                 scanned += 1
                 continue

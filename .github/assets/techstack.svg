@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120" width="800" height="120">
+  <style>
+    .tech-card { fill: #0f172a; stroke: #334155; stroke-width: 1; rx: 8; }
+    .tech-title { font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 13px; font-weight: 700; fill: #f8fafc; }
+    .tech-desc { font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 10px; fill: #94a3b8; }
+    .pulse-glow {
+      animation: pulse 3s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.8; }
+      50% { opacity: 1; filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.4)); }
+      100% { opacity: 0.8; }
+    }
+  </style>
+
+  <!-- Python 3.12+ -->
+  <g class="pulse-glow" transform="translate(10, 15)">
+    <rect width="145" height="90" class="tech-card"/>
+    <circle cx="35" cy="45" r="16" fill="#1e293b"/>
+    <text x="35" y="50" text-anchor="middle" font-size="18">🐍</text>
+    <text x="65" y="40" class="tech-title">Python</text>
+    <text x="65" y="58" class="tech-desc">3.12 / 3.13</text>
+    <text x="65" y="72" class="tech-desc">Core Engine</text>
+  </g>
+
+  <!-- Model Context Protocol -->
+  <g class="pulse-glow" transform="translate(168, 15)">
+    <rect width="145" height="90" class="tech-card"/>
+    <circle cx="35" cy="45" r="16" fill="#1e293b"/>
+    <text x="35" y="50" text-anchor="middle" font-size="18">⚡</text>
+    <text x="65" y="40" class="tech-title">MCP Protocol</text>
+    <text x="65" y="58" class="tech-desc">FastMCP 1.30</text>
+    <text x="65" y="72" class="tech-desc">Stdio Native</text>
+  </g>
+
+  <!-- Tree-sitter AST -->
+  <g class="pulse-glow" transform="translate(326, 15)">
+    <rect width="145" height="90" class="tech-card"/>
+    <circle cx="35" cy="45" r="16" fill="#1e293b"/>
+    <text x="35" y="50" text-anchor="middle" font-size="18">🌳</text>
+    <text x="65" y="40" class="tech-title">Tree-sitter</text>
+    <text x="65" y="58" class="tech-desc">v0.25.2 Parsers</text>
+    <text x="65" y="72" class="tech-desc">TS / JS / Python</text>
+  </g>
+
+  <!-- SQLite State -->
+  <g class="pulse-glow" transform="translate(484, 15)">
+    <rect width="145" height="90" class="tech-card"/>
+    <circle cx="35" cy="45" r="16" fill="#1e293b"/>
+    <text x="35" y="50" text-anchor="middle" font-size="18">🗄️</text>
+    <text x="65" y="40" class="tech-title">SQLite</text>
+    <text x="65" y="58" class="tech-desc">Local State &amp; Diffs</text>
+    <text x="65" y="72" class="tech-desc">Zero Overhead</text>
+  </g>
+
+  <!-- Windows & Linux -->
+  <g class="pulse-glow" transform="translate(642, 15)">
+    <rect width="148" height="90" class="tech-card"/>
+    <circle cx="35" cy="45" r="16" fill="#1e293b"/>
+    <text x="35" y="50" text-anchor="middle" font-size="18">🪟</text>
+    <text x="65" y="40" class="tech-title">Cross-OS</text>
+    <text x="65" y="58" class="tech-desc">Windows &amp; Linux</text>
+    <text x="65" y="72" class="tech-desc">Pwsh 7 Acceptance</text>
+  </g>
+</svg>

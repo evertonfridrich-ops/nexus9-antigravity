@@ -111,20 +111,28 @@ class CodeIndex:
                 con.execute("DELETE FROM code_index")
                 con.execute("INSERT OR REPLACE INTO index_meta VALUES('schema_version','2')")
 
-    def update_file(self, path: str):
+    def update_file(self, path: str, con=None):
         _, raw, sha, size = self.guard.load(path)
         if size > self.policy.index_limits["file_bytes"]:
             raise GuardError("source exceeds hardware profile file limit; use smaller files or standard hardware profile")
-        with self.guard.connect() as con:
+        if con is not None:
             row = con.execute("SELECT sha,metadata FROM code_index WHERE path=?", (path,)).fetchone()
+        else:
+            with self.guard.connect() as c:
+                row = c.execute("SELECT sha,metadata FROM code_index WHERE path=?", (path,)).fetchone()
         if row and row[0] == sha:
             return json.loads(row[1]), sha, raw, False
         meta = outline(path, raw)
         counts = dict(Counter(terms(redact(raw) + " " + path)).most_common(1000))
-        with self.guard.connect() as con:
+        if con is not None:
             if not row and con.execute("SELECT count(*) FROM code_index").fetchone()[0] >= 5000:
                 raise GuardError("code index capacity reached (5000 files)")
             con.execute("INSERT OR REPLACE INTO code_index VALUES(?,?,?,?,?)", (path, sha, size, encode(meta), encode(counts)))
+        else:
+            with self.guard.connect() as c:
+                if not row and c.execute("SELECT count(*) FROM code_index").fetchone()[0] >= 5000:
+                    raise GuardError("code index capacity reached (5000 files)")
+                c.execute("INSERT OR REPLACE INTO code_index VALUES(?,?,?,?,?)", (path, sha, size, encode(meta), encode(counts)))
         return meta, sha, raw, True
 
     def refresh(self, max_files: int = 250) -> dict:
@@ -135,39 +143,37 @@ class CodeIndex:
         scan_limited = self.guard.scan_limited
         with self.guard.connect() as con:
             row = con.execute("SELECT value FROM index_meta WHERE key='cursor'").fetchone()
-        cursor = row[0] if row else ""
-        # Rotate bounded batches so later files are not permanently starved.
-        ordered = [x for x in candidates if x[0] > cursor] + [x for x in candidates if x[0] <= cursor]
-        processed, skipped, source_bytes, limited = 0, 0, 0, scan_limited
-        for path, size in ordered:
-            if (processed >= max_files or parsed >= limits["max_reparsed"]
-                    or time.monotonic() - started > limits["seconds"]
-                    or source_bytes + size > limits["source_bytes"]):
-                limited = True
-                break
-            processed += 1
-            cursor = path
-            seen.add(path)
-            if size > limits["file_bytes"]:
-                skipped += 1
-                continue
-            try:
-                _, _, _, changed = self.update_file(path)
-            except (GuardError, OSError):
-                skipped += 1
-                continue
-            source_bytes += size
-            parsed += int(changed)
-            unchanged += int(not changed)
-        limited |= bool(skipped)
-        removed = 0
-        if not scan_limited and processed == len(candidates):
-            with self.guard.connect() as con:
+            cursor = row[0] if row else ""
+            # Rotate bounded batches so later files are not permanently starved.
+            ordered = [x for x in candidates if x[0] > cursor] + [x for x in candidates if x[0] <= cursor]
+            processed, skipped, source_bytes, limited = 0, 0, 0, scan_limited
+            for path, size in ordered:
+                if (processed >= max_files or parsed >= limits["max_reparsed"]
+                        or time.monotonic() - started > limits["seconds"]
+                        or source_bytes + size > limits["source_bytes"]):
+                    limited = True
+                    break
+                processed += 1
+                cursor = path
+                seen.add(path)
+                if size > limits["file_bytes"]:
+                    skipped += 1
+                    continue
+                try:
+                    _, _, _, changed = self.update_file(path, con=con)
+                except (GuardError, OSError):
+                    skipped += 1
+                    continue
+                source_bytes += size
+                parsed += int(changed)
+                unchanged += int(not changed)
+            limited |= bool(skipped)
+            removed = 0
+            if not scan_limited and processed == len(candidates):
                 for (path,) in con.execute("SELECT path FROM code_index").fetchall():
                     if path not in seen:
                         con.execute("DELETE FROM code_index WHERE path=?", (path,))
                         removed += 1
-        with self.guard.connect() as con:
             con.execute("INSERT OR REPLACE INTO index_meta VALUES('last_refresh',?)", (str(time.time()),))
             con.execute("INSERT OR REPLACE INTO index_meta VALUES('limited',?)", (str(limited),))
             con.execute("INSERT OR REPLACE INTO index_meta VALUES('cursor',?)", (cursor,))
