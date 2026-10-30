@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 import time
 
@@ -14,27 +15,35 @@ from .reducers import compress, log_groups, evaluate
 from .schemas import QUERY_SCHEMAS, MANAGE_SCHEMAS
 from .policy import RuntimePolicy
 from . import __version__
+from .checks import CheckRunner
+from .investigations import InvestigationStore
+from .domains import Domains
+from .runtime import RuntimeIdentity
 
 HEADS = [
-    {"id": 1, "name": "Orchestrator", "operations": ["plan"], "purpose": "Task route, risk cues and validation plan"},
-    {"id": 2, "name": "Tool Router", "operations": ["route"], "purpose": "Progressive catalog and task-specific tool selection"},
+    {"id": 1, "name": "Orchestrator", "operations": ["plan", "investigation"], "purpose": "Task routes and evidence-linked investigation status"},
+    {"id": 2, "name": "Tool Router", "operations": ["route", "domain_pack"], "purpose": "Progressive schemas and metadata-only domain recipes"},
     {"id": 3, "name": "Context Compiler", "operations": ["index", "context", "outline", "snippet", "impact", "verify"], "purpose": "Incremental parser index, ranked packets and local import graph"},
-    {"id": 4, "name": "Project Memory", "operations": ["memory_save", "memory", "resume"], "purpose": "Provenanced constraints, decisions and source-aware resumption"},
+    {"id": 4, "name": "Project Memory", "operations": ["memory_save", "memory", "resume", "investigation_save", "regression_cases"], "purpose": "Revisioned decisions, evidence, notes and traceable regression cases"},
     {"id": 5, "name": "Delta & Cache", "operations": ["remember_read", "delta", "cache_save", "cache"], "purpose": "Explicit snapshots, diffs and dependency-validated answer reuse"},
-    {"id": 6, "name": "Budget Governor", "operations": ["session_open", "session_close", "health"], "purpose": "Runtime ownership, health and atomic response-byte budgets"},
+    {"id": 6, "name": "Budget Governor", "operations": ["session_open", "session_close", "health", "runtime_status"], "purpose": "Runtime identity, ownership, health and atomic byte budgets"},
     {"id": 7, "name": "Local Reducer", "operations": ["logs", "compress"], "purpose": "Grouped errors and loss-visible exact context deduplication"},
-    {"id": 8, "name": "Usage & Evaluation", "operations": ["usage_record", "metrics", "evaluate"], "purpose": "Local telemetry, reported provider usage and paired quality checks"},
+    {"id": 8, "name": "Usage & Evaluation", "operations": ["usage_record", "metrics", "evaluate", "check_profiles", "check_run", "check_result"], "purpose": "Telemetry, paired quality checks and opt-in observed test receipts"},
     {"id": 9, "name": "Scoped Handoff", "operations": ["handoff"], "purpose": "Bounded role/task briefs with project constraints and source evidence"},
 ]
 PROFILES = {"economy": (4096, 1), "balanced": (12000, 3), "rigorous": (24576, 5)}
 
 
 class Suite:
-    def __init__(self, root, state_dir=None, policy=None):
+    def __init__(self, root, state_dir=None, policy=None, enable_test_runner=False):
         self.policy = policy or RuntimePolicy()
         self.guard = Engine(root, state_dir)
         self.index = CodeIndex(self.guard, self.policy)
         self.state = State(self.guard)
+        self.checks = CheckRunner(self.guard, enabled=enable_test_runner)
+        self.investigations = InvestigationStore(self.guard, runner=self.checks)
+        self.domains = Domains(self.guard)
+        self.identity = RuntimeIdentity()
 
     def canonical(self, path):
         return self.guard.path(path).relative_to(self.guard.root).as_posix()
@@ -46,11 +55,15 @@ class Suite:
             if not schema:
                 raise GuardError("unknown operation")
             return {"operation": operation, "tool": "nexus_manage" if operation in MANAGE_SCHEMAS else "nexus_query",
-                    "schema": schema.model_json_schema(), "writes_project_code": False}
+                    "schema": schema.model_json_schema(), "writes_project_code": operation == "check_run",
+                    "runs_project_code": operation == "check_run",
+                    "requires_test_runner_opt_in": operation == "check_run"}
         disabled = self.policy.disabled()
         heads = [{**head, "operations": [op for op in head["operations"] if op not in disabled],
                   "disabled_operations": [op for op in head["operations"] if op in disabled]} for head in HEADS]
         return {"project": "NEXUS9", "version": __version__, "heads": heads, "runtime_policy": self.policy.report(),
+                "test_runner": {"enabled": self.checks.enabled, "child_isolation": False,
+                                "scope": "Only explicitly configured trusted tests; child retains OS permissions."},
                 "next": "Discover one operation schema with nexus_catalog(operation), then call its tool with parameters.",
                 "limits": "UTF-8 response-byte budgets; provider token usage is not automatically observed"}
 
@@ -83,7 +96,21 @@ class Suite:
                     database_ok = con.execute("PRAGMA quick_check").fetchone()[0] == "ok"
                 result = {"version": __version__, "state_integrity": "ok" if database_ok else "failed",
                           "runtime_policy": self.policy.report(), "project_bound": True,
+                          "test_runner_enabled": self.checks.enabled,
                           "host_hooks_inspected": False, "scope": "local server only; run doctor.ps1 for IDE integration"}
+            elif operation == "runtime_status":
+                result = self.identity.status()
+                result["test_runner_enabled"] = self.checks.enabled
+            elif operation == "domain_pack":
+                result = self.domains.get(**values)
+            elif operation == "investigation":
+                result = self.investigations.get(**values)
+            elif operation == "regression_cases":
+                result = self.investigations.cases(**values)
+            elif operation == "check_profiles":
+                result = self.checks.profiles()
+            elif operation == "check_result":
+                result = self.check_summary(self.checks.get_run(**values))
             elif operation == "plan":
                 result = self.plan(**values)
             elif operation == "index":
@@ -129,6 +156,8 @@ class Suite:
             if len(encode(result).encode()) > limit:
                 raise GuardError("result exceeds response budget; narrow the query, reduce count/groups, or explicitly increase the session budget")
             self.state.record(operation, result, started, session)
+            if operation in {"context", "handoff"}:
+                self.identity.delivered(operation, result)
             return result
         except GuardError:
             self.state.record(operation, {"error": "guarded_failure"}, started, session, status="error", charge=False)
@@ -149,13 +178,54 @@ class Suite:
         elif operation == "cache_save":
             values["files"] = [self.canonical(p) for p in values["files"]]
             result = self.state.cache_save(**values)
+        elif operation == "investigation_save":
+            # Preserve omission on append updates; a Pydantic default is not a
+            # caller request to replace an existing non-generic domain.
+            if "domain" not in (parameters or {}).get("body", {}):
+                values["body"].pop("domain", None)
+            if "domain" in values["body"]:
+                self.domains.get(values["body"]["domain"])
+            result = self.investigations.save(**values)
+        elif operation == "check_run":
+            result = self.check_summary(self.checks.run(**values))
         else:
             result = self.state.usage_record(values)
         # Management controls are not charged against retrieval budgets, so users can close exhausted sessions.
         self.state.record(operation, result, started, session, charge=False)
         return result
 
-    def plan(self, task, profile="balanced"):
+    def investigation_brief(self, name):
+        report = self.investigations.get(name, limit=1)
+        if not report.get("found", True):
+            raise GuardError("requested investigation does not exist")
+        keys = ("name", "revision", "status", "next_checks", "scope", "provenance")
+        brief = {key: report[key] for key in keys if key in report}
+        checks = brief.get("next_checks", [])
+        brief["next_checks"] = checks[:3]
+        brief["next_checks_omitted"] = max(0, len(checks) - 3)
+        return brief
+
+    @staticmethod
+    def check_summary(receipt):
+        # Full manifests stay in local immutable receipts, not repeated in every
+        # MCP response. Graph validation uses CheckRunner.get_run internally.
+        hashes = receipt.get("source_hashes", {})
+        changes = receipt.get("changed_sources", [])
+        public = {"run_id", "profile", "provenance", "status", "passed", "fresh", "exit_code", "tests_run",
+                  "timed_out", "tests_skipped", "tests_executed", "tests_expected_failures", "tests_passed",
+                  "output", "output_truncated", "output_complete", "receipt_sha256", "recorded_at",
+                  "recorded_passed", "recorded_status", "scope"}
+        result = {key: value for key, value in receipt.items() if key in public}
+        result.update(source_count=len(hashes),
+                      sources_manifest_sha256=hashlib.sha256(encode(hashes).encode()).hexdigest(),
+                      source_preview=[{"path": path[:300], "sha256": sha}
+                                      for path, sha in list(hashes.items())[:3]],
+                      changed_sources=[path[:300] for path in changes[:5]],
+                      changed_sources_omitted=max(0, len(changes) - 5),
+                      manifest_scope="Bounded preview; full source fingerprints retained in the local receipt.")
+        return result
+
+    def plan(self, task, profile="balanced", investigation=None):
         lower = task.casefold()
         cues = {
             "database": ["sql", "database", "banco", "sqlite", "migration"],
@@ -170,14 +240,17 @@ class Suite:
             steps += ["logs", "impact"]
         if sensitive:
             steps += ["impact", "resume"]
-        return {"task": redact(task), "categories": categories, "profile": profile,
+        result = {"task": redact(task), "categories": categories, "profile": profile,
                 "risk_cues": "elevated" if sensitive else "ordinary_not_proof_of_low_risk", "operations": [op for op in dict.fromkeys(steps) if op not in self.policy.disabled()],
                 "validation": ["compiler/type checker appropriate to project", "tests for affected behavior", "device test when hardware/location matters"],
                 "method": "deterministic keyword policy; not model reasoning or automatic execution",
                 "network_calls": 0, "spawns_agents": False}
+        if investigation:
+            result["investigation"] = self.investigation_brief(investigation)
+        return result
 
-    def route(self, task, profile="balanced", external_tools=None):
-        plan = self.plan(task, profile)
+    def route(self, task, profile="balanced", external_tools=None, investigation=None):
+        plan = self.plan(task, profile, investigation)
         chosen = []
         for tool in external_tools or []:
             score = len(set(terms(task)) & set(terms(" ".join(tool["tags"]) + " " + tool["name"])))
@@ -188,6 +261,7 @@ class Suite:
         selected = [t for _, t in chosen[:3]]
         total = sum(t["schema_bytes"] for t in external_tools or [])
         return {"builtin_operations": plan["operations"], "suggested_external_tools": [t["name"] for t in selected],
+                **({"investigation": plan["investigation"]} if investigation else {}),
                 "declared_catalog_schema_bytes": total, "declared_selected_schema_bytes": sum(t["schema_bytes"] for t in selected),
                 "changes_host_tool_loading": False, "method": "tag/keyword scoring over caller-supplied catalog",
                 "note": "NEXUS exposes three fixed MCP tools; operation schemas are fetched on demand. Other servers are not reconfigured."}
@@ -210,7 +284,7 @@ class Suite:
                 "validation_required": True}
 
     def context(self, task, profile="balanced", paths=None, constraints=None, known_hashes=None,
-                budget_bytes=12000, memory=None, focus_symbols=None, role=None, deliverable=None):
+                budget_bytes=12000, memory=None, focus_symbols=None, role=None, deliverable=None, investigation=None):
         cap, primary_count = PROFILES[profile]
         budget = min(cap, budget_bytes)
         canonical_paths = [self.canonical(p) for p in paths or []]
@@ -226,6 +300,8 @@ class Suite:
         packet = {"task": redact(task), "constraints": list(dict.fromkeys(pinned)), "decisions": saved_decisions,
                   "items": [], "omitted": [], "deduplicated": [], "coverage": {}, "content_is_untrusted": True,
                   "method": "lexical ranking + parser ranges + static local imports; not semantic embedding retrieval"}
+        if investigation:
+            packet["investigation"] = self.investigation_brief(investigation)
         if role:
             packet.update(role=redact(role), deliverable=redact(deliverable), validation=["report actual checks and unresolved risks"],
                           launches_agent=False, changes_model=False)

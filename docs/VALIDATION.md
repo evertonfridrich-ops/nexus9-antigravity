@@ -1,4 +1,54 @@
-# Validação do NEXUS9 0.3.0
+# Validação do NEXUS9 0.4.0
+
+## Execução desta evolução — Windows, 29/10/2026
+
+Suite completa com Python 3.12 e dependências existentes do ambiente isolado:
+**142 testes descobertos, 140 aprovados, zero falhas e 2 ignorados**. Os dois
+ignorados são cenários de links simbólicos sem privilégio disponível no Windows.
+Foi usado `python -B -m unittest discover -s tests -v`, com `PYTHONPATH=src`.
+Os testes que precisam de diretórios temporários/pipes foram executados com essa
+operação permitida; o bloqueio inicial do sandbox não foi contado como aprovação.
+
+As novas verificações cobrem persistência/restart, conflito atômico de revisão,
+referências e limites, snapshots imutáveis, evidências concorrentes, revalidação,
+paginação, notas/casos, domínio preservado em updates e identidade da instância.
+O runner opcional foi exercitado somente em projetos sintéticos, com sucesso,
+falha, timeout, zero testes, todos ignorados/falhas esperadas, fonte alterada,
+novo teste, saída limitada/redigida e recusa de argumentos arbitrários. O módulo
+unittest do workspace não consegue substituir o entrypoint isolado do runner.
+
+O fluxo completo foi executado: run observado -> investigação sustentada ->
+edição da fonte -> pendência de revalidação -> novo run/evidência -> vínculos
+revisionados -> conclusão sustentada novamente, preservando o histórico.
+Uma revisão independente encontrou e levou a correções em validade de provas,
+seleção de evidências, paginação, inventário de testes e defaults no update.
+
+O teste MCP real manteve três ferramentas, descobriu schemas das novas operações,
+registrou/consultou a investigação, confirmou a versão 0.4.0 e o recibo de contexto,
+detectou fonte alterada e recusou check_run sem opt-in. Nenhum código/estado de
+robô, credencial ou operação de exchange foi usado.
+
+O smoke separado `scripts/smoke.py` também passou: handshake, health, contexto
+Light e recusa de memória com dono externo. Foi confirmado que as nove cabeças
+cobrem exatamente 32 operações descobríveis, sem operações órfãs/duplicadas.
+O validador oficial `quick_validate.py` aprovou a skill (**Skill is valid!**),
+usando PyYAML em ambiente temporário, sem modificar dependências do projeto.
+
+`integration.py verify` aprovou o manifesto do pacote e o ZIP 0.4.0 foi criado e
+verificado por SHA-256. `uv --no-cache pip check --python .venv/Scripts/python.exe`
+aprovou a compatibilidade dos 35 pacotes do ambiente. Foi usado esse equivalente
+porque o venv não contém o módulo pip; nenhuma dependência do projeto foi alterada.
+
+A validação de fontes ocorre na consulta, não em background. Os fingerprints
+cobrem dependências declaradas e o inventário observado dos testes; não comprovam
+dependências omitidas, adequação dos testes ou semântica dos relatos supports/refutes.
+O runner executa testes confiáveis com permissões do usuário, sem isolamento de
+rede/filesystem, e permanece desabilitado por padrão. Receitas de domínio são
+metadados e não conectam MCPs automaticamente. Status identifica o processo que
+respondeu; não confirma leitura da skill ou obediência do modelo. Não foi feita
+ativação na interface do IDE, auto-update, publicação ou reinstalação global.
+
+## Histórico da validação 0.3.0
 
 **87 testes aprovados, zero falhas e zero skips**, em Linux/Python 3.12.14.
 Log completo: `test-results.txt`. Dependências instaladas em ambiente isolado

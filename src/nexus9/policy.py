@@ -31,7 +31,9 @@ class RuntimePolicy:
     def disabled(self):
         operations = {}
         if self.memory_owner == "external":
-            operations.update({op: "memory owned by external server" for op in ("memory_save", "memory", "resume")})
+            operations.update({op: "memory owned by external server" for op in (
+                "memory_save", "memory", "resume", "investigation_save", "investigation",
+                "regression_cases", "check_run", "check_result", "check_profiles")})
         if self.compression_owner == "external":
             operations.update({op: "compression owned by external server" for op in ("compress", "logs")})
         return operations
@@ -42,6 +44,8 @@ class RuntimePolicy:
             raise GuardError("operation disabled by runtime policy: " + reason)
         if operation in {"context", "handoff"} and (parameters or {}).get("memory") and self.memory_owner == "external":
             raise GuardError("NEXUS memory reference disabled; pass verified external constraints explicitly")
+        if (parameters or {}).get("investigation") and self.memory_owner == "external":
+            raise GuardError("NEXUS investigation reference disabled by memory ownership policy")
 
     def report(self):
         return {"hardware": self.hardware, "memory_owner": self.memory_owner,

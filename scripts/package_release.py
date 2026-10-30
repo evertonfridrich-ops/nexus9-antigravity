@@ -3,6 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 import zipfile
+import tomllib
 
 ROOT = Path(__file__).resolve().parents[1]
 EXCLUDE = {"__pycache__", ".venv", ".git", "dist", "build", ".pytest_cache"}
@@ -18,8 +19,9 @@ def members():
 if __name__ == "__main__":
     manifest = {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in members()}
     manifest_path = ROOT / "MANIFEST.sha256.json"
-    manifest_path.write_text(json.dumps(manifest, sort_keys=True, indent=2) + "\n")
-    archive = ROOT.parent / "NEXUS9-Antigravity-0.3.0-Windows.zip"
+    manifest_path.write_text(json.dumps(manifest, sort_keys=True, indent=2) + "\n", encoding="utf-8", newline="\n")
+    version = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
+    archive = ROOT.parent / f"NEXUS9-Antigravity-{version}-Windows.zip"
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as z:
         for p in sorted([*members(), manifest_path]):
             info = zipfile.ZipInfo("nexus9/" + p.relative_to(ROOT).as_posix(), date_time=(1980, 1, 1, 0, 0, 0))

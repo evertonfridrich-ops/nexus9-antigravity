@@ -53,7 +53,7 @@ if ($audit.scan_limited) { Write-Warning "Rule/hook audit was limited. Inspect C
 $runtimeTag = $integrity.manifest_sha256.Substring(0, 12)
 if (-not $RuntimeBase) { $RuntimeBase = Join-Path $env:LOCALAPPDATA "NEXUS9" }
 $RuntimeBase = [IO.Path]::GetFullPath($RuntimeBase)
-$installDir = Join-Path $RuntimeBase ("runtime-0.3.0-" + $runtimeTag)
+$installDir = Join-Path $RuntimeBase ("runtime-0.4.0-" + $runtimeTag)
 $venvPython = Join-Path $installDir ".venv\Scripts\python.exe"
 $entry = @{
     command = $venvPython

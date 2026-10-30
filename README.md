@@ -19,11 +19,15 @@
 
 > **Criado e mantido por [Everton Fridrich](https://github.com/evertonfridrich-ops).**
 
-**Nove módulos executáveis, 24 operações e Skill nativa.**
+**Nove módulos executáveis, 32 operações e Skill nativa.**
 Executa análise, seleção, deduplicação, memória e auditoria localmente; a Skill
 orquestra três ferramentas MCP com descoberta progressiva.
 
-Versão 0.3.0: implementação local testada, com arquitetura e controles voltados
+Versão 0.4.0: investigações ligam hipóteses, fontes, testes, conclusões e casos
+de regressão. As fontes são revalidadas na consulta; recibos de testes observados
+exigem runner explicitamente habilitado. Veja [investigações com evidências](docs/INVESTIGATIONS.md).
+
+Implementação local testada, com arquitetura e controles voltados
 a uso profissional. Instalação Windows/Antigravity real, revisão independente e
 medição com o provedor ainda precisam ser concluídas antes de declarar produção
 institucional. Não há certificação ou percentual garantido de economia.
@@ -33,7 +37,7 @@ institucional. Não há certificação ou percentual garantido de economia.
 | Cabeça | Função implementada | Benefício concreto |
 |---|---|---|
 | 1. Orchestrator | Classifica a tarefa por política, sugere operações e validação | Evita começar com leituras e ferramentas indiscriminadas |
-| 2. Tool Router | Catálogo progressivo e seleção por tags de ferramentas informadas | Só três schemas MCP fixos; parâmetros das 24 operações sob demanda |
+| 2. Tool Router | Catálogo progressivo, tags e receitas de domínio | Só três schemas MCP fixos; contratos das operações sob demanda |
 | 3. Context Compiler | Índice por SHA-256, ranking lexical, parser TS/TSX/JS/Python, símbolos, referências e imports | Monta pacote com código alvo, declarações relacionadas e dependências locais |
 | 4. Project Memory | Restrições, decisões, pendências e evidências com origem e revisão | Preserva decisões do projeto e identifica fontes alteradas na retomada |
 | 5. Delta & Cache | Snapshots explícitos, unified diff, cache de respostas com fontes e TTL | Reutiliza somente fontes válidas e mostra alterações desde a leitura conhecida |
@@ -131,20 +135,19 @@ Instale Python 3.12 ou 3.13 com PATH, abra PowerShell nessa pasta e execute:
 .\install-for-your-pc.ps1 -Workspace "CAMINHO_REAL_DO_PROJETO"
 ```
 
-Esse atalho usa os caminhos que você informou:
+Esse atalho detecta automaticamente o ambiente do seu computador:
 
-- MCP config: `C:\Users\QG DUS GURI\.gemini\antigravity\mcp_config.json`.
-- Skill: `C:\Users\QG DUS GURI\.gemini\config\skills\nexus9\SKILL.md`.
+- MCP config: `%USERPROFILE%\.gemini\config\mcp_config.json` (ou `.gemini\antigravity`).
+- Skill: `%USERPROFILE%\.gemini\config\skills\nexus9\SKILL.md`.
 - Hardware: `Light`; memória/compressão: `Auto`.
 
 `-Workspace` é a raiz do projeto de código que o NEXUS9 poderá ler; não é a pasta
-onde o pacote foi extraído. Para outro computador, use `install.ps1` com
-`-ConfigPath` e `-SkillPath` explícitos. Se não houver escolha explícita e duas
-configs forem detectadas, o instalador exige o caminho mostrado em View raw config.
-Atualize os servidores MCP e verifique a Skill em Customizations após instalar.
+onde o pacote foi extraído. O instalador detecta automaticamente a configuração
+do Antigravity no computador. Atualize os servidores MCP e verifique a Skill em
+Customizations após instalar.
 
 O runtime usa um ambiente Python isolado em
-`%LOCALAPPDATA%\NEXUS9\runtime-0.3.0-<hash>`. Não precisa de administrador, chave API
+`%LOCALAPPDATA%\NEXUS9\runtime-0.4.0-<hash>`. Não precisa de administrador, chave API
 ou serviço HTTP. Dependências são fixadas e verificadas por hashes. O download
 inicial requer internet; as operações usam arquivos e estado locais. O modelo
 continua podendo receber os trechos retornados através do IDE.
@@ -194,6 +197,14 @@ NEXUS9; no Antigravity 2.0 há invocação manual `/nexus9`. Verifique a superf�
 e versão em uso. O agente deve descobrir o schema antes de chamar a operação.
 
 ## Operações disponíveis
+
+A versão 0.4 acrescenta `investigation_save`, `investigation`, `regression_cases`,
+`domain_pack`, `check_profiles`, `check_run`, `check_result` e `runtime_status`.
+O grafo preserva revisões, fontes e explicações concorrentes. `plan`, `route`,
+`context` e `handoff` podem referenciar uma investigação para carregar seu estado.
+Notas/casos não geram testes ou executam código automaticamente. O runner opcional
+executa apenas perfis unittest confiáveis configurados, com permissões do usuário;
+é desabilitado por padrão e não constitui sandbox. [Contratos e exemplos](docs/INVESTIGATIONS.md).
 
 | Tipo | Operações |
 |---|---|

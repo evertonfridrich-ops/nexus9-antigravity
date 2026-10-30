@@ -1,4 +1,23 @@
-# Operação e recuperação — NEXUS9 0.3.0
+# Operação e recuperação — NEXUS9 0.4.0
+
+## Investigações e identidade
+
+Veja [INVESTIGATIONS.md](INVESTIGATIONS.md) para os contratos de investigação,
+revalidação de provas, casos de regressão e runner de testes opcional. Novas
+tabelas SQLite são criadas de forma aditiva; memória, snapshots e orçamento
+existentes permanecem em suas tabelas. As operações respeitam o dono da memória.
+
+Após reinstalar/reconectar, consulte `runtime_status` no próprio IDE e confira a
+versão 0.4.0 e a instância que respondeu. O comando compara arquivos observados
+na criação da instância com o disco atual; uma diferença pede reinício, sem
+afirmar que os bytes novos já estão carregados. O recibo de contexto registra
+entrega pelo endpoint, não compreensão pelo modelo. Não há auto-update/watcher.
+
+`check_run` depende de `--enable-test-runner` e de perfis confiáveis em
+`nexus9-checks.json`; não é ativado pela instalação padrão nem por notas ou
+receitas de domínio. O processo de teste tem as permissões do usuário e pode
+alterar arquivos/acessar rede, conforme seu código. Inspecione os checks antes
+de habilitar, especialmente em projetos com launchers operacionais.
 
 ## Instalação e mudança de versão
 

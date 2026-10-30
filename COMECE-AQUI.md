@@ -4,15 +4,18 @@ Baixe **NEXUS9-Antigravity-0.3.0-Windows.zip**. Este documento sozinho não cont
 nem instala o servidor. O ZIP inclui código, instaladores, Skill nativa, testes
 e relatórios. Nove módulos, 24 operações e três ferramentas MCP.
 
-## 1. Colocar os arquivos em F:\SKILLS
+## 1. Colocar os arquivos em qualquer pasta
 
-Salve o ZIP em `F:\SKILLS`. Extraia-o nessa mesma pasta; ele já contém a pasta
-`nexus9`. Se houver uma pasta antiga com esse nome, preserve-a com outro nome
-antes de extrair. No PowerShell:
+Salve o ZIP em qualquer pasta do computador (ex: `C:\SKILLS` ou `F:\SKILLS`). Extraia-o nessa mesma pasta; ele já contém a pasta `nexus9`. Se houver uma pasta antiga com esse nome, preserve-a com outro nome antes de extrair.
+
+> [!NOTE]
+> **Zero dependência de GitHub:** Este pacote é 100% autônomo. Você pode copiá-lo via pendrive, rede local ou nuvem para qualquer computador Windows. Não exige conta no GitHub nem Git instalado.
+
+No PowerShell:
 
 ```powershell
-Expand-Archive -LiteralPath 'F:\SKILLS\NEXUS9-Antigravity-0.3.0-Windows.zip' -DestinationPath 'F:\SKILLS'
-Set-Location -LiteralPath 'F:\SKILLS\nexus9'
+Expand-Archive -LiteralPath '.\NEXUS9-Antigravity-0.3.0-Windows.zip' -DestinationPath '.'
+Set-Location -LiteralPath '.\nexus9'
 ```
 
 Confirme `install.ps1`, `install-for-your-pc.ps1`, `server.py`, `README.md` e
@@ -22,19 +25,22 @@ Confirme `install.ps1`, `install-for-your-pc.ps1`, `server.py`, `README.md` e
 ## 2. Instalar
 
 Requer Python **3.12 ou 3.13, Windows 64 bits**, com PATH habilitado.
-O caminho de Workspace abaixo precisa ser substituído pela **raiz do seu
-projeto de código**. `F:\SKILLS\nexus9` é a pasta do pacote, não a raiz do projeto.
+O caminho de Workspace precisa ser a **raiz do seu projeto de código** (onde estão seus fontes).
 
+### Opção A — Mais simples (Dois cliques ou CMD):
+Dê dois cliques em **`instalar.bat`** (ou execute no terminal). Ele pedirá o caminho do projeto e cuidará das permissões do Windows automaticamente.
+
+### Opção B — Via PowerShell:
 ```powershell
-.\install-for-your-pc.ps1 -Workspace 'CAMINHO_REAL_DO_PROJETO'
+powershell -ExecutionPolicy Bypass -File .\install-for-your-pc.ps1 -Workspace 'C:\CAMINHO\REAL\DO\SEU\PROJETO'
 ```
 
-O atalho já usa os caminhos que você informou:
+O instalador detecta automaticamente o ambiente do seu computador:
 
-| Componente | Destino |
+| Componente | Destino Detectado |
 | --- | --- |
-| MCP config ativo | `C:\Users\QG DUS GURI\.gemini\antigravity\mcp_config.json` |
-| Skill nativa | `C:\Users\QG DUS GURI\.gemini\config\skills\nexus9\SKILL.md` |
+| MCP config ativo | `%USERPROFILE%\.gemini\config\mcp_config.json` (ou `.gemini\antigravity`) |
+| Skill nativa | `%USERPROFILE%\.gemini\config\skills\nexus9\SKILL.md` |
 | Hardware | Light, sem embeddings ou workers em background |
 | Dono de memória/compressão | Auto, após diagnóstico |
 

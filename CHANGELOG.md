@@ -3,6 +3,19 @@
 Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [0.4.0] - 2026-10-29
+
+### Adicionado
+- Investigações revisionadas com hipóteses, notas, fontes, evidências, conclusões e critérios explícitos.
+- Revalidação de dependências na consulta, hipóteses concorrentes e explicações focadas por conclusão.
+- Biblioteca de casos de regressão ligada às notas e receitas de domínio em metadados, sem carregar plugins.
+- Runner unittest opcional, desabilitado por padrão, com perfis explícitos, resultados observados e recibos persistidos.
+- Status da instância em execução, fingerprints de início/disco e recibos de entrega de contexto.
+
+### Alterado
+- Plan/context/handoff podem carregar o estado de uma investigação; as três ferramentas MCP e nove cabeças são preservadas.
+- Novas operações respeitam a política de dono da memória. Instalações existentes exigem reinstalação/reconexão para adotar a versão.
+
 ## [0.3.0] - 2026-10-02
 
 ### Adicionado

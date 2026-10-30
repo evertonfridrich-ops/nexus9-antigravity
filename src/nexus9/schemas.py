@@ -18,6 +18,7 @@ class Empty(Strict):
 class Plan(Strict):
     task: Annotated[str, Field(min_length=1, max_length=2000)]
     profile: Literal["economy", "balanced", "rigorous"] = "balanced"
+    investigation: Name | None = None
 
 
 class Context(Plan):
@@ -162,3 +163,14 @@ QUERY_SCHEMAS = {"plan": Plan, "context": Context, "index": Index, "outline": Ou
                  "handoff": Handoff, "metrics": Empty, "health": Empty, "evaluate": Evaluate}
 MANAGE_SCHEMAS = {"session_open": Session, "session_close": SessionClose, "memory_save": MemorySave,
                   "remember_read": RememberRead, "cache_save": CacheSave, "usage_record": Usage}
+
+# Keep the three MCP tools stable; discover new operation contracts on demand.
+from .investigation_models import QUERY_SCHEMAS as INVESTIGATION_QUERIES, MANAGE_SCHEMAS as INVESTIGATION_MANAGEMENT
+from .check_models import QUERY_SCHEMAS as CHECK_QUERIES, MANAGE_SCHEMAS as CHECK_MANAGEMENT
+from .domains import DomainQuery
+
+QUERY_SCHEMAS.update(INVESTIGATION_QUERIES)
+QUERY_SCHEMAS.update(CHECK_QUERIES)
+QUERY_SCHEMAS.update({"runtime_status": Empty, "domain_pack": DomainQuery})
+MANAGE_SCHEMAS.update(INVESTIGATION_MANAGEMENT)
+MANAGE_SCHEMAS.update(CHECK_MANAGEMENT)

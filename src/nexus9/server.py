@@ -20,7 +20,7 @@ def make_server(suite):
         "Preserve constraints and validation. Byte budgets are not model token limits."
     ))
     ro = ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=False)
-    rw = ToolAnnotations(readOnlyHint=False, destructiveHint=False, openWorldHint=False)
+    rw = ToolAnnotations(readOnlyHint=False, destructiveHint=suite.checks.enabled, openWorldHint=suite.checks.enabled)
 
     def response(function, *args):
         try:
@@ -45,7 +45,7 @@ def make_server(suite):
     @server.tool(annotations=rw)
     def nexus_manage(operation: Annotated[str, Field(max_length=80)], parameters: dict | None = None,
                      session: Annotated[str, Field(pattern=r"^[A-Za-z0-9_-]{1,64}$")] | None = None) -> CallToolResult:
-        """Explicitly save memory/snapshots/cache/usage or open/close a local budget session; never edits project code."""
+        """Change local state. check_run executes configured trusted tests only with explicit server opt-in."""
         return response(suite.manage, operation, parameters, session)
 
     return server
@@ -58,11 +58,14 @@ def main():
     parser.add_argument("--hardware", choices=("light", "standard"), default="standard")
     parser.add_argument("--memory-owner", choices=("nexus9", "external"), default="nexus9")
     parser.add_argument("--compression-owner", choices=("nexus9", "external"), default="nexus9")
+    parser.add_argument("--enable-test-runner", action="store_true",
+                        help="Allow explicitly configured trusted Python tests with user OS permissions; disabled by default")
     args = parser.parse_args()
     if not args.root:
         parser.error("--root is required")
     try:
-        suite = Suite(args.root, args.state_dir, RuntimePolicy(args.hardware, args.memory_owner, args.compression_owner))
+        suite = Suite(args.root, args.state_dir, RuntimePolicy(args.hardware, args.memory_owner, args.compression_owner),
+                      enable_test_runner=args.enable_test_runner)
     except (GuardError, OSError):
         parser.error("workspace or local state unavailable")
     make_server(suite).run(transport="stdio")
