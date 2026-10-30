@@ -1,12 +1,22 @@
-# NEXUS9 0.3.0 — instalação no seu Antigravity
+# NEXUS9 0.4.0 — instalação no seu Antigravity
 
-Baixe **NEXUS9-Antigravity-0.3.0-Windows.zip**. Este documento sozinho não contém
+Baixe **NEXUS9-Antigravity-0.4.0-Windows.zip**. Este documento sozinho não contém
 nem instala o servidor. O ZIP inclui código, instaladores, Skill nativa, testes
-e relatórios. Nove módulos, 24 operações e três ferramentas MCP.
+e relatórios. Nove módulos, 32 operações e três ferramentas MCP.
+
+Escolha o caminho de uso:
+
+- [NEXUS9 sozinho: instalação, atualização e diagnóstico](docs/ANTIGRAVITY.md).
+- [NEXUS9 + QUANT9 no mesmo projeto](docs/USO-CONJUNTO.md).
+- [Investigações, evidências e testes observados](docs/INVESTIGATIONS.md).
+
+Para uma instalação nova por workspace ou se já houver entradas globais, siga o
+manual individual acima antes do atalho global desta página. Ele explica como
+evitar duplicações e escolher explicitamente o dono de memória/compressão.
 
 ## 1. Colocar os arquivos em qualquer pasta
 
-Salve o ZIP em qualquer pasta do computador (ex: `C:\SKILLS` ou `F:\SKILLS`). Extraia-o nessa mesma pasta; ele já contém a pasta `nexus9`. Se houver uma pasta antiga com esse nome, preserve-a com outro nome antes de extrair.
+Salve o ZIP em uma pasta de ferramentas do computador, por exemplo `C:\Ferramentas`. Extraia-o nessa pasta; ele já contém a pasta `nexus9`. Se houver uma pasta antiga com esse nome, preserve-a com outro nome antes de extrair.
 
 > [!NOTE]
 > **Zero dependência de GitHub:** Este pacote é 100% autônomo. Você pode copiá-lo via pendrive, rede local ou nuvem para qualquer computador Windows. Não exige conta no GitHub nem Git instalado.
@@ -14,7 +24,7 @@ Salve o ZIP em qualquer pasta do computador (ex: `C:\SKILLS` ou `F:\SKILLS`). Ex
 No PowerShell:
 
 ```powershell
-Expand-Archive -LiteralPath '.\NEXUS9-Antigravity-0.3.0-Windows.zip' -DestinationPath '.'
+Expand-Archive -LiteralPath '.\NEXUS9-Antigravity-0.4.0-Windows.zip' -DestinationPath '.'
 Set-Location -LiteralPath '.\nexus9'
 ```
 
@@ -28,7 +38,7 @@ Requer Python **3.12 ou 3.13, Windows 64 bits**, com PATH habilitado.
 O caminho de Workspace precisa ser a **raiz do seu projeto de código** (onde estão seus fontes).
 
 ### Opção A — Mais simples (Dois cliques ou CMD):
-Dê dois cliques em **`instalar.bat`** (ou execute no terminal). Ele pedirá o caminho do projeto e cuidará das permissões do Windows automaticamente.
+Dê dois cliques em **`instalar.bat`** (ou execute no terminal). Ele pedirá o caminho do projeto e chamará o instalador. Esse atalho usa os destinos globais detectados; não é necessária instalação como administrador.
 
 ### Opção B — Via PowerShell:
 ```powershell
@@ -39,10 +49,14 @@ O instalador detecta automaticamente o ambiente do seu computador:
 
 | Componente | Destino Detectado |
 | --- | --- |
-| MCP config ativo | `%USERPROFILE%\.gemini\config\mcp_config.json` (ou `.gemini\antigravity`) |
+| MCP config candidato | `%USERPROFILE%\.gemini\config\mcp_config.json` (ou `.gemini\antigravity`); confirme no **View raw config** do IDE |
 | Skill nativa | `%USERPROFILE%\.gemini\config\skills\nexus9\SKILL.md` |
 | Hardware | Light, sem embeddings ou workers em background |
 | Dono de memória/compressão | Auto, após diagnóstico |
+
+O wrapper escolhe o primeiro candidato encontrado; isso não comprova qual config
+o IDE está usando. Se existirem os dois caminhos, confira **View raw config** e
+informe `-ConfigPath` explicitamente, conforme o [manual individual](docs/ANTIGRAVITY.md).
 
 Para revisar o plano sem instalar: acrescentar `-PlanOnly`. Se uma entrada
 NEXUS9 ou uma Skill diferente já existir, o instalador preserva essa versão e
@@ -59,7 +73,9 @@ mudanças e preserva recibos para recuperação.
 O instalador **não pausa nem apaga** outros MCPs, hooks ou regras. Com HYDRA/
 agentMemory detectados, mantém as funções sobrepostas com dono externo e o
 NEXUS9 bloqueia suas operações correspondentes. As demais funções continuam
-ativas. Confira o diagnóstico:
+ativas. Na versão 0.4, memória externa também bloqueia investigações, casos e
+recibos de testes. Trocar o dono não migra a memória de outra ferramenta.
+Confira o diagnóstico:
 
 ```powershell
 .\doctor.ps1 -Workspace 'CAMINHO_REAL_DO_PROJETO'
@@ -84,10 +100,12 @@ Atualize os servidores MCP. Confirme `nexus_catalog`, `nexus_query` e
 > Use a Skill NEXUS9 neste projeto. Confira a política de dono de cada função,
 > monte contexto mínimo preservando minhas restrições, informe omissões e valide
 > a alteração com os testes reais do projeto. Preserve as decisões no dono de
-> memória indicado pela política. Consulte health para confirmar a integração.
+> memória indicado pela política. Descubra e consulte runtime_status e health;
+> confirme a versão 0.4.0, a política de dono e o acesso à raiz correta.
 
-No Antigravity 2.0, a Skill também pode ser invocada com `/nexus9`. A Skill
-orquestra as três ferramentas; ela não substitui o processo Python/MCP.
+Se sua interface oferecer a skill no menu `/`, selecione `/nexus9`. Caso contrário,
+mencione a skill pelo nome e confira **Customizations**. A skill orquestra as três
+ferramentas; ela não substitui o processo Python/MCP.
 
 ## 5. Reverter ou medir
 

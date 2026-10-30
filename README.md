@@ -20,6 +20,11 @@
 > **Criado e mantido por [Everton Fridrich](https://github.com/evertonfridrich-ops).**
 
 **Nove módulos executáveis, 32 operações e Skill nativa.**
+
+**Manuais para começar:** [NEXUS9 sozinho no Antigravity](docs/ANTIGRAVITY.md)
+ou [NEXUS9 + QUANT9 em conjunto](docs/USO-CONJUNTO.md). Os guias distinguem
+pacote, workspace, config ativo, skill e versão do processo que respondeu.
+
 Executa análise, seleção, deduplicação, memória e auditoria localmente; a Skill
 orquestra três ferramentas MCP com descoberta progressiva.
 
@@ -126,8 +131,9 @@ flowchart TD
 
 ## Instalar no Windows
 
-Leia `COMECE-AQUI.md`. Extraia **o ZIP completo** em `F:\SKILLS`; ele já contém
-uma pasta `nexus9`. Confirme `F:\SKILLS\nexus9\install.ps1`, `server.py`,
+Leia `COMECE-AQUI.md`. Extraia **o ZIP completo** em uma pasta de ferramentas,
+por exemplo `C:\Ferramentas`; ele já contém uma pasta `nexus9`.
+Confirme `C:\Ferramentas\nexus9\install.ps1`, `server.py`,
 `README.md` e `skills\nexus9\SKILL.md`. Baixar apenas um `.md` não instala o projeto.
 Instale Python 3.12 ou 3.13 com PATH, abra PowerShell nessa pasta e execute:
 
@@ -135,15 +141,16 @@ Instale Python 3.12 ou 3.13 com PATH, abra PowerShell nessa pasta e execute:
 .\install-for-your-pc.ps1 -Workspace "CAMINHO_REAL_DO_PROJETO"
 ```
 
-Esse atalho detecta automaticamente o ambiente do seu computador:
+Esse atalho procura os locais conhecidos no seu computador:
 
 - MCP config: `%USERPROFILE%\.gemini\config\mcp_config.json` (ou `.gemini\antigravity`).
 - Skill: `%USERPROFILE%\.gemini\config\skills\nexus9\SKILL.md`.
 - Hardware: `Light`; memória/compressão: `Auto`.
 
 `-Workspace` é a raiz do projeto de código que o NEXUS9 poderá ler; não é a pasta
-onde o pacote foi extraído. O instalador detecta automaticamente a configuração
-do Antigravity no computador. Atualize os servidores MCP e verifique a Skill em
+onde o pacote foi extraído. O arquivo encontrado é um candidato, não prova do
+config ativo. Confira **View raw config** no IDE e informe `-ConfigPath` se houver
+ambiguidade; não mantenha entradas globais/locais conflitantes. Atualize os servidores MCP e verifique a Skill em
 Customizations após instalar.
 
 O runtime usa um ambiente Python isolado em
